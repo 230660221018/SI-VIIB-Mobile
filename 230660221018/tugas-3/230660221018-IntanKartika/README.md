@@ -1,6 +1,6 @@
-# SIPORA — Sistem Informasi Pengajuan Observasi dan Riset Akademik
+# SIPORA — Sistem Informasi Pengajuan Surat Observasi dan Riset Akademik
 
-SIPORA (Sistem Informasi Pengajuan Observasi dan Riset Akademik) merupakan aplikasi mobile berbasis Flutter yang dirancang sebagai implementasi pembelajaran **Pemrograman Aplikasi Bergerak**. Aplikasi ini menyediakan tampilan informasi pengajuan surat secara sederhana, terstruktur, dan mudah dipahami oleh pengguna.
+SIPORA (Sistem Informasi Pengajuan Surat Observasi dan Riset Akademik) merupakan aplikasi mobile berbasis Flutter yang dirancang sebagai implementasi pembelajaran **Pemrograman Aplikasi Bergerak**. Aplikasi ini menyediakan tampilan informasi pengajuan surat secara sederhana, terstruktur, dan mudah dipahami oleh pengguna.
 
 Project ini dikembangkan sebagai bagian dari tugas perkuliahan dengan menerapkan konsep dasar **Flutter, Dart, widget, layout, dan struktur antarmuka aplikasi mobile**.
 
@@ -11,7 +11,7 @@ Project ini dikembangkan sebagai bagian dari tugas perkuliahan dengan menerapkan
 | Keterangan         | Detail                           |
 | ------------------ | -------------------------------- |
 | Nama Aplikasi      | SIPORA                           |
-| Kepanjangan        | Siistem Informasi Pengajuan Observasi dan Riset Akademik|
+| Kepanjangan        | Sistem Informasi Pengajuan Surat Observasi dan Riset Akademik|
 | Platform           | Mobile / Web melalui Flutter     |
 | Framework          | Flutter                          |
 | Bahasa Pemrograman | Dart                             |
@@ -281,7 +281,7 @@ SIPORA merupakan implementasi aplikasi Flutter sederhana yang berfokus pada pene
 
 ---
 
-**Project:** SIPORA — Sistem Informasi Pengajuan Observasi dan Riset Akademik
+**Project:** SIPORA — Sistem Informasi Pengajuan Surat Observasi dan Riset Akademik
 **Framework:** Flutter
 **Language:** Dart
 **Purpose:** Tugas Perkuliahan Pemrograman Aplikasi Bergerak
