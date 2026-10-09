@@ -201,6 +201,3 @@ Pengembangan SIPORA dapat dilanjutkan melalui beberapa tahap:
 
 SIPORA dikembangkan sebagai rancangan sistem informasi untuk mendukung proses pengajuan surat observasi dan penelitian akademik. Pengembangan dilakukan dengan memperhatikan kebutuhan pengguna, keteraturan alur administrasi, dan kualitas antarmuka. Melalui pengembangan bertahap, proyek ini diharapkan dapat menjadi dasar bagi implementasi sistem pengajuan surat akademik yang lebih terstruktur dan mudah digunakan.
 
----
-
-**Catatan:** README ini menjelaskan ruang lingkup dan rancangan proyek. Keterangan mengenai fitur yang sudah berfungsi perlu disesuaikan dengan implementasi aktual aplikasi.
