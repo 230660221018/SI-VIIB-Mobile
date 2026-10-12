@@ -1,173 +1,145 @@
-# Dokumen Kebutuhan SIPORA
+# Model Data SIPORA
 
-## 1. Deskripsi Aplikasi
+## 1. Tujuan Model Data
 
-**SIPORA (Sistem Informasi Pengajuan Surat Observasi dan Riset Akademik)** merupakan aplikasi mobile yang dirancang untuk membantu mahasiswa dalam mengajukan surat observasi dan surat riset akademik kepada pihak fakultas. Aplikasi ini berangkat dari kebutuhan akan proses pengajuan yang lebih terstruktur, terutama dalam pengisian data, penyampaian dokumen pendukung, serta pemantauan status pengajuan. Melalui SIPORA, mahasiswa dapat memilih jenis surat, mengisi data pengajuan, melengkapi dokumen pendukung, mengirim pengajuan, dan memantau perkembangan prosesnya hingga surat selesai. Bagi petugas fakultas, SIPORA membantu menyediakan informasi pengajuan yang lebih terorganisasi sehingga proses pemeriksaan data, pemeriksaan dokumen, dan pembaruan status dapat dilakukan secara lebih sistematis. Penggunaan platform mobile dipilih karena proses pengajuan dapat dilakukan melalui perangkat yang umum digunakan mahasiswa maupun petugas tanpa bergantung pada tempat tertentu selama tersedia akses internet.
+Model data SIPORA dirancang untuk merepresentasikan informasi pengajuan surat observasi dan riset akademik yang diisi oleh mahasiswa. Pada Tugas 7, model ini digunakan sebagai dasar pengelolaan data lokal melalui operasi *Create, Read, Update,* dan *Delete* (CRUD).
 
----
+Perancangan model data mengacu pada kebutuhan fungsional dalam `dokumen-kebutuhan.md` pada Tugas 4 serta struktur formulir pada `form-interaksi.dart` dalam Tugas 6. Dengan demikian, data yang dikelola tetap berkaitan dengan alur pengajuan yang telah dirancang sebelumnya.
 
-## 2. User Persona
+Pada tahap ini, data disimpan dalam memori aplikasi dan belum menggunakan basis data maupun layanan server. Oleh karena itu, pengelolaan data lokal pada Tugas 7 merupakan simulasi awal dari proses pengajuan SIPORA, bukan pengiriman pengajuan secara nyata kepada petugas fakultas.
 
-### Persona 1 — Intan — Mahasiswa
+## 2. Entitas Data
 
-| Komponen                  | Deskripsi                                                                                                                                                                                        |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Nama dan peran**        | Intan, mahasiswa yang membutuhkan surat observasi atau riset akademik sebagai bagian dari kegiatan akademik.                                                                                     |
-| **Tujuan**                | Mengajukan surat yang dibutuhkan secara lengkap serta memperoleh informasi yang jelas mengenai perkembangan pengajuan sampai surat selesai.                                                      |
-| **Kendala**               | Perlu memastikan data pengajuan sesuai dengan kebutuhan kegiatan, menyiapkan dokumen pendukung, dan mengetahui status pengajuan tanpa harus melakukan pengecekan secara berulang kepada petugas. |
-| **Perangkat dan konteks** | Smartphone, digunakan ketika berada di lingkungan kampus, tempat tinggal, atau lokasi kegiatan akademik dengan akses internet.                                                                   |
-| **Frekuensi penggunaan**  | Digunakan sesuai kebutuhan kegiatan observasi atau riset akademik, terutama ketika mahasiswa perlu mengajukan surat kepada pihak fakultas.                                                       |
+Model data SIPORA terdiri atas dua entitas, yaitu `PengajuanSurat` dan `AnggotaPengajuan`.
 
-### Persona 2 — Rina — Petugas Fakultas
+### 2.1 Entitas PengajuanSurat
 
-| Komponen                  | Deskripsi                                                                                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Nama dan peran**        | Rina, petugas fakultas yang bertanggung jawab memeriksa dan memproses pengajuan surat dari mahasiswa.                                                        |
-| **Tujuan**                | Memastikan data dan dokumen pengajuan telah sesuai serta memperbarui status pengajuan agar proses dapat diketahui oleh mahasiswa.                            |
-| **Kendala**               | Perlu menangani beberapa pengajuan mahasiswa dengan kondisi yang berbeda sehingga informasi setiap pengajuan harus tersaji secara jelas dan mudah diperiksa. |
-| **Perangkat dan konteks** | Smartphone atau perangkat kerja, digunakan di lingkungan fakultas untuk memeriksa dan memproses pengajuan mahasiswa.                                         |
-| **Frekuensi penggunaan**  | Digunakan secara rutin selama terdapat pengajuan surat yang perlu diperiksa dan diproses.                                                                    |
+`PengajuanSurat` merupakan entitas utama yang menyimpan informasi suatu pengajuan surat. Setiap pengajuan memiliki ID unik yang digunakan untuk mengidentifikasi data ketika ditampilkan, diperbarui, atau dihapus.
 
----
+| No. | Nama Field | Tipe Data Dart | Sumber Data | Keterangan |
+|---:|---|---|---|---|
+| 1 | `id` | `String` | Sistem | Identitas unik setiap pengajuan yang dibuat oleh aplikasi. |
+| 2 | `jenisPengajuan` | `String` | Form | Jenis surat yang dipilih, seperti `Observasi` atau `Penelitian Skripsi`. |
+| 3 | `jenisPelaksanaan` | `String` | Form | Jenis pelaksanaan, yaitu `Individu` atau `Kelompok`, sesuai pilihan pada formulir. |
+| 4 | `anggota` | `List<AnggotaPengajuan>` | Form | Daftar mahasiswa yang terlibat dalam pengajuan, termasuk mahasiswa pengaju dan anggota kelompok jika ada. |
+| 5 | `semester` | `String` | Form | Semester mahasiswa pengaju. |
+| 6 | `programStudi` | `String` | Form | Program studi mahasiswa pengaju. |
+| 7 | `whatsapp` | `String` | Form | Nomor WhatsApp yang dicantumkan untuk keperluan komunikasi. |
+| 8 | `tempat` | `String` | Form | Nama instansi atau tempat pelaksanaan observasi maupun penelitian. |
+| 9 | `alamat` | `String` | Form | Alamat tempat pelaksanaan kegiatan. |
+| 10 | `tanggalMulai` | `DateTime` | Form | Tanggal mulai kegiatan yang diajukan. |
+| 11 | `tanggalSelesai` | `DateTime` | Form | Tanggal selesai kegiatan yang diajukan. |
+| 12 | `topik` | `String` | Form | Topik atau tujuan kegiatan observasi maupun penelitian. |
+| 13 | `untukMataKuliah` | `bool` | Form | Penanda apakah pengajuan observasi digunakan untuk keperluan mata kuliah. |
+| 14 | `mataKuliah` | `String?` | Form | Nama mata kuliah apabila pengajuan observasi berkaitan dengan mata kuliah. Bernilai `null` jika tidak relevan atau tidak diisi. |
+| 15 | `status` | `String` | Sistem | Status awal pengajuan yang ditetapkan aplikasi, yaitu `Diproses`. |
 
-## 3. Kebutuhan Fungsional
+Field `anggota` menggunakan daftar objek `AnggotaPengajuan` agar data setiap mahasiswa tersimpan sebagai satu kesatuan. Pendekatan ini memudahkan aplikasi menampilkan informasi mahasiswa secara konsisten, baik untuk pengajuan individu maupun kelompok.
 
-Kebutuhan fungsional SIPORA dirumuskan berdasarkan aktivitas utama yang diperlukan oleh mahasiswa dan petugas fakultas. Setiap kebutuhan ditulis sebagai satu fungsi yang dapat diamati dan diverifikasi.
+Field `untukMataKuliah` dan `mataKuliah` mengikuti kondisi pada formulir Tugas 6. Informasi mata kuliah hanya relevan ketika pengajuan observasi digunakan untuk keperluan mata kuliah. Dengan demikian, tidak semua pengajuan harus memiliki nilai `mataKuliah`.
 
-| ID       | Rumusan Kebutuhan                                                                                                                                 | Terkait Persona |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| **F-01** | Mahasiswa dapat memilih jenis surat yang akan diajukan sehingga jenis pengajuan sesuai dengan kebutuhan kegiatan akademiknya.                     | Persona 1       |
-| **F-02** | Mahasiswa dapat mengisi data pengajuan surat sehingga informasi yang diperlukan tercatat dalam pengajuan.                                         | Persona 1       |
-| **F-03** | Mahasiswa dapat mengunggah dokumen pendukung sehingga persyaratan pengajuan dapat disampaikan kepada petugas fakultas.                            | Persona 1       |
-| **F-04** | Mahasiswa dapat mengirim pengajuan setelah data dan dokumen pendukung dinyatakan lengkap sehingga pengajuan tercatat untuk diproses oleh petugas. | Persona 1       |
-| **F-05** | Mahasiswa dapat melihat status pengajuan sehingga perkembangan proses pengajuan dapat diketahui.                                                  | Persona 1       |
-| **F-06** | Mahasiswa dapat memperoleh surat yang telah selesai sehingga dokumen dapat digunakan untuk keperluan kegiatan akademik.                           | Persona 1       |
-| **F-07** | Petugas fakultas dapat melihat daftar pengajuan mahasiswa sehingga pengajuan yang masuk dapat diidentifikasi untuk diproses.                      | Persona 2       |
-| **F-08** | Petugas fakultas dapat memeriksa data pengajuan sehingga kesesuaian informasi yang diberikan mahasiswa dapat diketahui.                           | Persona 2       |
-| **F-09** | Petugas fakultas dapat memeriksa dokumen pendukung sehingga kelengkapan persyaratan pengajuan dapat diketahui.                                    | Persona 2       |
-| **F-10** | Petugas fakultas dapat memperbarui status pengajuan sehingga mahasiswa memperoleh informasi mengenai perkembangan proses pengajuan.               | Persona 2       |
-| **F-11** | Petugas fakultas dapat mengunggah surat yang telah selesai sehingga mahasiswa dapat memperoleh dokumen surat dalam bentuk soft file.              | Persona 2       |
+### 2.2 Entitas AnggotaPengajuan
 
----
+`AnggotaPengajuan` merupakan entitas pendukung yang menyimpan identitas setiap mahasiswa yang terlibat dalam suatu pengajuan.
 
-## 4. Kebutuhan Nonfungsional
+| No. | Nama Field | Tipe Data Dart | Sumber Data | Keterangan |
+|---:|---|---|---|---|
+| 1 | `nama` | `String` | Form | Nama mahasiswa yang terlibat dalam pengajuan. |
+| 2 | `nimNpm` | `String` | Form | Nomor identitas mahasiswa berupa NIM atau NPM. |
 
-Kebutuhan nonfungsional digunakan untuk menetapkan karakteristik kualitas yang perlu dipenuhi SIPORA agar dapat digunakan secara efektif dan nyaman oleh pengguna.
+NIM/NPM menggunakan tipe `String`, bukan `int`, karena nomor identitas bukan nilai untuk operasi aritmetika dan dapat mengandung angka nol di awal. Data nama dan NIM/NPM disimpan bersama dalam satu objek agar identitas setiap anggota tidak tertukar.
 
-| ID        | Kategori      | Rumusan                                                                                                       | Kriteria Terukur                                                                                                                                    |
-| --------- | ------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **NF-01** | Usability     | SIPORA harus menyediakan navigasi yang sederhana dan mudah dipahami oleh pengguna.                            | Pengguna dapat mencapai halaman utama pengajuan dalam **maksimal 3 perpindahan halaman** dari halaman utama aplikasi.                               |
-| **NF-02** | Performance   | SIPORA harus memberikan respons yang memadai ketika pengguna mengakses halaman utama dan informasi pengajuan. | Halaman utama dan daftar pengajuan dapat ditampilkan dalam **maksimal 3 detik** pada kondisi koneksi internet yang stabil.                          |
-| **NF-03** | Security      | SIPORA harus membatasi akses informasi pengajuan berdasarkan peran pengguna.                                  | Mahasiswa hanya dapat melihat data pengajuan miliknya sendiri, sedangkan petugas fakultas dapat mengakses pengajuan yang menjadi tanggung jawabnya. |
-| **NF-04** | Compatibility | SIPORA harus dapat digunakan pada perangkat mobile dengan ukuran layar yang umum digunakan oleh pengguna.     | Seluruh elemen utama antarmuka dapat ditampilkan dan digunakan pada layar **5–7 inci** tanpa terpotong atau keluar dari area tampilan.              |
+## 3. Relasi Antarentitas
 
----
+Satu objek `PengajuanSurat` memiliki satu atau lebih objek `AnggotaPengajuan` sesuai jenis pelaksanaannya. Pada pengajuan individu, daftar anggota berisi mahasiswa pengaju. Pada pengajuan kelompok, daftar anggota memuat mahasiswa pengaju dan anggota kelompok lainnya.
 
-## 5. Prioritas Fitur (MoSCoW)
-
-Prioritas kebutuhan ditentukan berdasarkan kontribusinya terhadap tujuan utama SIPORA serta kebutuhan masing-masing persona. Pengelompokan dilakukan menggunakan metode **MoSCoW**, dengan jumlah kebutuhan pada kategori *Must have* dibatasi maksimal lima sesuai ketentuan Tugas 4.
-
-| Prioritas                 | ID Kebutuhan                     | Alasan                                                                                                                                                                                                                                                                                          |
-| ------------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Must have**             | **F-01, F-02, F-03, F-04, F-05** | Fungsi tersebut membentuk rangkaian utama aktivitas mahasiswa, mulai dari menentukan jenis surat, melengkapi pengajuan, menyampaikan dokumen, mengirim pengajuan, hingga memantau status. Tanpa fungsi ini, tujuan utama SIPORA sebagai media pengajuan surat belum dapat tercapai secara utuh. |
-| **Should have**           | **F-07, F-08, F-09, F-10**       | Fungsi ini mendukung petugas dalam memeriksa dan memproses pengajuan mahasiswa. Keberadaannya diperlukan agar proses pengajuan yang telah dikirim dapat ditindaklanjuti secara terstruktur dan statusnya dapat diperbarui.                                                                      |
-| **Could have**            | **F-06, F-11**                   | Fungsi memperoleh dan mengunggah surat yang telah selesai merupakan bagian dari tahap akhir layanan. Fungsi tersebut tetap diperlukan dalam proses layanan secara keseluruhan, tetapi dapat dikembangkan setelah alur inti pengajuan dan pemeriksaan berjalan dengan baik.                      |
-| **Won't have (saat ini)** | **—**                            | Fitur di luar kebutuhan inti pengajuan surat, seperti integrasi layanan pihak ketiga, notifikasi melalui aplikasi eksternal, atau fitur tambahan lainnya belum menjadi ruang lingkup pada tahap pengembangan saat ini.                                                                          |
-
----
-
-## 6. Pemetaan Kebutuhan ke Antarmuka
-
-Pemetaan kebutuhan berikut digunakan untuk memastikan setiap kebutuhan fungsional memiliki representasi antarmuka yang dapat dikembangkan pada tahap perancangan UI/UX. Widget yang dicantumkan mengacu pada materi Pertemuan 3 dan masih merupakan rancangan struktur antarmuka, bukan desain final.
-
-| ID       | Rumusan Ringkas              | Prioritas   | Halaman                          | Widget                                                       |
-| -------- | ---------------------------- | ----------- | -------------------------------- | ------------------------------------------------------------ |
-| **F-01** | Memilih jenis surat          | Must have   | Halaman Pilih Jenis Surat        | `Scaffold`, `AppBar`, `Column`, `Card`, `ListTile`           |
-| **F-02** | Mengisi data pengajuan       | Must have   | Halaman Form Pengajuan           | `Scaffold`, `AppBar`, `Column`, `Padding`, `Row`             |
-| **F-03** | Mengunggah dokumen pendukung | Must have   | Halaman Dokumen Pengajuan        | `Scaffold`, `AppBar`, `Column`, `Card`, `Row`                |
-| **F-04** | Mengirim pengajuan           | Must have   | Halaman Konfirmasi Pengajuan     | `Scaffold`, `AppBar`, `Column`, `Row`, `Card`                |
-| **F-05** | Melihat status pengajuan     | Must have   | Halaman Daftar Pengajuan         | `Scaffold`, `AppBar`, `ListView.builder`, `Card`, `ListTile` |
-| **F-06** | Memperoleh surat selesai     | Could have  | Halaman Detail Pengajuan         | `Scaffold`, `AppBar`, `Column`, `Card`, `Row`                |
-| **F-07** | Melihat daftar pengajuan     | Should have | Halaman Daftar Pengajuan Petugas | `Scaffold`, `AppBar`, `ListView.builder`, `Card`, `ListTile` |
-| **F-08** | Memeriksa data pengajuan     | Should have | Halaman Detail Pengajuan Petugas | `Scaffold`, `AppBar`, `Column`, `Card`, `ListTile`           |
-| **F-09** | Memeriksa dokumen pendukung  | Should have | Halaman Detail Dokumen           | `Scaffold`, `AppBar`, `Column`, `Card`, `ListTile`           |
-| **F-10** | Memperbarui status pengajuan | Should have | Halaman Detail Pengajuan Petugas | `Scaffold`, `AppBar`, `Column`, `Row`, `Card`                |
-| **F-11** | Mengunggah surat selesai     | Could have  | Halaman Penyelesaian Pengajuan   | `Scaffold`, `AppBar`, `Column`, `Card`, `Row`                |
-
----
-
-## 7. User Flow
-
-### 7.1 Identitas Alur
-
-| Aspek           | Isi                                                                                                                                                |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Nama alur**   | Pengajuan Surat Observasi atau Riset Akademik                                                                                                      |
-| **Aktor**       | Persona 1 — Intan (Mahasiswa)                                                                                                                      |
-| **Tujuan alur** | Mahasiswa berhasil mengirim pengajuan surat dengan data dan dokumen yang lengkap sehingga pengajuan tercatat untuk diproses oleh petugas fakultas. |
-
-### 7.2 Diagram User Flow
+Relasi tersebut dapat digambarkan sebagai berikut:
 
 ```mermaid
-flowchart TD
-    A([Mulai]) --> B[Buka SIPORA]
-    B --> C[Halaman Utama]
-    C --> D[Pilih Jenis Surat]
-    D --> E[Isi Data Pengajuan]
-    E --> F{Data Pengajuan Lengkap dan Valid?}
+classDiagram
+    class PengajuanSurat {
+        +String id
+        +String jenisPengajuan
+        +String jenisPelaksanaan
+        +List~AnggotaPengajuan~ anggota
+        +String semester
+        +String programStudi
+        +String whatsapp
+        +String tempat
+        +String alamat
+        +DateTime tanggalMulai
+        +DateTime tanggalSelesai
+        +String topik
+        +bool untukMataKuliah
+        +String? mataKuliah
+        +String status
+    }
 
-    F -- "Tidak" --> G[Tampilkan Pesan Kesalahan]
-    G --> E
+    class AnggotaPengajuan {
+        +String nama
+        +String nimNpm
+    }
 
-    F -- "Ya" --> H[Unggah Dokumen Pendukung]
-    H --> I{Dokumen Pendukung Lengkap dan Valid?}
-
-    I -- "Tidak" --> J[Tampilkan Informasi Dokumen yang Belum Sesuai]
-    J --> H
-
-    I -- "Ya" --> K[Periksa Kembali Data dan Dokumen]
-    K --> L[Konfirmasi Pengajuan]
-    L --> M[Kirim Pengajuan]
-    M --> N[Pengajuan Berhasil Tercatat]
-    N --> O[Lihat Status Pengajuan]
-    O --> P([Tujuan Tercapai])
+    PengajuanSurat "1" *-- "1..*" AnggotaPengajuan : memiliki
 ```
 
-### 7.3 Daftar Langkah
+Relasi tersebut menggambarkan struktur objek dalam aplikasi, bukan relasi tabel basis data. Implementasi Tugas 7 menggunakan objek Dart dan daftar lokal dalam memori.
 
-| No. | Jenis     | Langkah/Halaman                      | Bila gagal                                                                                                                                                                |
-| --: | --------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|   1 | Mulai     | Membuka SIPORA                       | —                                                                                                                                                                         |
-|   2 | Halaman   | Halaman Utama                        | —                                                                                                                                                                         |
-|   3 | Halaman   | Memilih jenis surat yang dibutuhkan  | —                                                                                                                                                                         |
-|   4 | Halaman   | Mengisi data pengajuan surat         | —                                                                                                                                                                         |
-|   5 | Keputusan | Data pengajuan lengkap dan valid?    | **Tidak:** sistem menampilkan pesan kesalahan dan pengguna kembali ke formulir. **Ya:** pengguna melanjutkan ke pengunggahan dokumen.                                     |
-|   6 | Halaman   | Mengunggah dokumen pendukung         | —                                                                                                                                                                         |
-|   7 | Keputusan | Dokumen pendukung lengkap dan valid? | **Tidak:** sistem memberikan informasi mengenai dokumen yang belum sesuai dan pengguna kembali ke halaman dokumen. **Ya:** pengguna melanjutkan ke pemeriksaan pengajuan. |
-|   8 | Halaman   | Memeriksa kembali data dan dokumen   | —                                                                                                                                                                         |
-|   9 | Halaman   | Mengonfirmasi pengajuan              | —                                                                                                                                                                         |
-|  10 | Proses    | Mengirim pengajuan                   | —                                                                                                                                                                         |
-|  11 | Halaman   | Pengajuan berhasil tercatat          | —                                                                                                                                                                         |
-|  12 | Halaman   | Melihat status pengajuan             | —                                                                                                                                                                         |
+## 4. Pemetaan Field terhadap Kebutuhan Fungsional
 
-### 7.4 Daftar Pemeriksaan Diagram
+Pemetaan berikut mengacu pada ID kebutuhan fungsional yang telah ditetapkan dalam dokumen Tugas 4.
 
-* [x] Jumlah langkah minimal 8, di luar titik mulai dan tujuan.
-* [x] Terdapat minimal 2 titik keputusan.
-* [x] Setiap keputusan memiliki cabang **Ya** dan **Tidak**.
-* [x] Setiap cabang gagal memiliki tindak lanjut.
-* [x] Tidak terdapat langkah yang buntu.
-* [x] Label setiap langkah dapat dipahami tanpa penjelasan lisan.
-* [ ] Diagram telah ditelusuri melalui *peer review* oleh satu teman sekelas.
+| ID Kebutuhan | Kebutuhan Fungsional | Field atau Data Terkait | Penerapan pada Tugas 7 |
+|---|---|---|---|
+| F-01 | Mahasiswa dapat memilih jenis surat yang akan diajukan. | `jenisPengajuan` | Jenis pengajuan dicatat dalam objek setelah dipilih melalui formulir. |
+| F-02 | Mahasiswa dapat mengisi data pengajuan surat. | `anggota`, `semester`, `programStudi`, `whatsapp`, `tempat`, `alamat`, `tanggalMulai`, `tanggalSelesai`, `topik`, `untukMataKuliah`, `mataKuliah`, dan `jenisPelaksanaan` | Data dari formulir direpresentasikan dalam model pengajuan. |
+| F-04 | Mahasiswa dapat mengirim pengajuan setelah data dan dokumen pendukung dinyatakan lengkap. | Seluruh field pengajuan dan `id` | Dalam lingkup Tugas 7, data yang telah dikonfirmasi dapat ditambahkan ke daftar lokal. Proses ini belum merupakan pengiriman ke server atau petugas fakultas. |
+| F-05 | Mahasiswa dapat melihat status pengajuan. | `id`, `jenisPengajuan`, `tempat`, dan `status` | Daftar lokal menampilkan informasi ringkas pengajuan dan status awalnya. Pemantauan status secara aktual belum tersedia. |
 
----
+### Kebutuhan yang Belum Diimplementasikan
 
-## 8. Refleksi
+Beberapa kebutuhan Tugas 4 belum dapat direpresentasikan sebagai fungsi yang berjalan penuh pada model lokal ini.
 
-Bagian yang paling menantang dalam penyusunan analisis kebutuhan adalah merumuskan setiap kebutuhan fungsional secara spesifik agar satu kebutuhan hanya merepresentasikan satu fungsi yang dapat diverifikasi. Penentuan prioritas MoSCoW juga membutuhkan pertimbangan karena setiap fungsi perlu dilihat berdasarkan kebutuhan pengguna dan kontribusinya terhadap tujuan utama SIPORA. Penyusunan user flow menjadi bagian yang cukup menantang karena alur harus tetap sederhana tetapi memenuhi ketentuan jumlah langkah, titik keputusan, serta menyediakan tindak lanjut yang jelas ketika terjadi kondisi gagal.
+| ID Kebutuhan | Kebutuhan | Batasan pada Tugas 7 |
+|---|---|---|
+| F-03 | Mengunggah dokumen pendukung. | Formulir Tugas 6 yang diperiksa belum mengimplementasikan pengunggahan dokumen. Karena itu, model ini belum memiliki field dokumen yang dapat digunakan. |
+| F-06 | Memperoleh surat yang telah selesai. | Belum ada berkas surat hasil penerbitan yang disimpan atau dapat diunduh. |
+| F-07 | Petugas melihat daftar pengajuan mahasiswa. | Daftar yang dikembangkan pada Tugas 7 merupakan daftar lokal di sisi aplikasi mahasiswa, bukan daftar bersama milik petugas. |
+| F-08 | Petugas memeriksa data pengajuan. | Belum tersedia halaman dan mekanisme pemeriksaan khusus petugas. |
+| F-09 | Petugas memeriksa dokumen pendukung. | Belum tersedia data dokumen pendukung yang dapat diperiksa. |
+| F-10 | Petugas memperbarui status pengajuan. | Status pada model lokal belum terhubung dengan tindakan petugas atau server. |
+| F-11 | Petugas mengunggah surat yang telah selesai. | Belum tersedia proses pengunggahan surat hasil penyelesaian. |
 
----
+Pemetaan ini menjaga kesesuaian antara kebutuhan yang direncanakan pada Tugas 4 dan kemampuan prototipe yang benar-benar dikembangkan sampai Tugas 7. Kebutuhan yang belum diimplementasikan tetap dicatat sebagai ruang pengembangan berikutnya, bukan dianggap sudah terpenuhi.
 
-## 9. Deklarasi Penggunaan AI
+## 5. Aturan Pengelolaan Data
 
-**Deklarasi penggunaan AI:** ChatGPT — membantu meninjau struktur analisis kebutuhan, memeriksa kejelasan rumusan kebutuhan fungsional dan nonfungsional, serta memberikan masukan terhadap user flow dan pemetaan kebutuhan ke antarmuka; hasilnya dirumuskan ulang dan disesuaikan oleh penulis.
+Agar data konsisten selama operasi CRUD, aturan berikut diterapkan pada model dan logika aplikasi:
+
+1. **ID unik.** Setiap pengajuan memperoleh ID yang dibuat oleh sistem. ID digunakan sebagai identitas utama saat mencari, memperbarui, dan menghapus data. Indeks daftar tidak digunakan sebagai identitas pengajuan.
+2. **Field model tidak berubah langsung.** Field pada model `PengajuanSurat` dan `AnggotaPengajuan` dirancang menggunakan `final`. Ketika pengajuan diperbarui, aplikasi membentuk objek pengganti dengan ID yang sama.
+3. **Validasi data.** Data yang diterima model berasal dari formulir yang telah melewati validasi. Tanggal selesai tidak boleh mendahului tanggal mulai.
+4. **Status awal.** Pengajuan yang baru ditambahkan memperoleh status `Diproses` agar selaras dengan label status yang digunakan pada contoh daftar SIPORA sebelumnya. Status tersebut hanya menggambarkan keadaan awal pada simulasi lokal.
+5. **Keterkaitan anggota.** Setiap anggota menyimpan nama dan NIM/NPM dalam satu objek. Perubahan daftar anggota dilakukan sebagai bagian dari perubahan objek pengajuan yang bersangkutan.
+6. **Batas penyimpanan.** Data disimpan dalam daftar di memori aplikasi. Data dapat hilang ketika aplikasi dimulai ulang karena persistensi belum diimplementasikan.
+
+## 6. Hubungan dengan Implementasi CRUD Lokal
+
+Model data menjadi dasar untuk empat operasi yang akan dikembangkan pada `crud-lokal.dart`.
+
+| Operasi | Penerapan | Hasil yang Diharapkan |
+|---|---|---|
+| Create | Membentuk objek `PengajuanSurat` dari hasil formulir, menetapkan ID unik dan status awal, lalu menambahkannya ke daftar menggunakan `setState()`. | Pengajuan baru muncul pada daftar. |
+| Read | Membaca daftar objek melalui `ListView.builder`. | Informasi pengajuan ditampilkan secara dinamis sesuai data yang tersedia. |
+| Update | Mencari pengajuan menggunakan ID, kemudian mengganti objek lama dengan objek baru yang memiliki ID yang sama. | Perubahan hanya diterapkan pada pengajuan yang dipilih. |
+| Delete | Menampilkan dialog konfirmasi, kemudian menghapus objek berdasarkan ID menggunakan `removeWhere()` setelah pengguna menyetujui. | Pengajuan yang dipilih dihapus dari daftar lokal. |
+
+Operasi Update dan Delete pada Tugas 7 merupakan kemampuan pengelolaan data dalam prototipe lokal. Keduanya tidak dimaksudkan sebagai pengganti proses pemeriksaan atau perubahan status resmi yang dilakukan oleh petugas fakultas pada sistem SIPORA yang terintegrasi.
+
+## 7. Keputusan Penyimpanan Data
+
+Penyimpanan menggunakan daftar objek di dalam `State` pada `StatefulWidget`. Pendekatan ini dipilih karena sesuai dengan tujuan pengembangan MVP awal, yaitu mempelajari pengelolaan data dan alur CRUD tanpa menambahkan paket eksternal.
+
+Setiap operasi yang mengubah daftar dijalankan melalui `setState()` agar antarmuka menampilkan kondisi data terbaru. Penyimpanan permanen ke basis data atau penyimpanan lokal perangkat belum menjadi bagian dari implementasi ini.
+
+Dengan rancangan tersebut, model data SIPORA tetap berkesinambungan dengan kebutuhan pengajuan pada Tugas 4 dan formulir pada Tugas 6, sekaligus membatasi ruang lingkup implementasi Tugas 7 pada pengelolaan data pengajuan secara lokal.
