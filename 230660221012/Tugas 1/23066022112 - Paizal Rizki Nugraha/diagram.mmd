@@ -1,0 +1,33 @@
+
+flowchart TD
+    A["Pengguna (Mahasiswa)"]
+
+    subgraph APP["APK Catatan - Aplikasi Mobile"]
+        B["Antarmuka Pengguna (UI)"]
+        C["Pengelolaan Catatan"]
+        D["Tambah Catatan"]
+        E["Lihat Catatan"]
+        F["Edit Catatan"]
+        G["Hapus Catatan"]
+        H["Cari Catatan"]
+
+        B --> C
+        C --> D
+        C --> E
+        C --> F
+        C --> G
+        C --> H
+    end
+
+    subgraph DATA["Penyimpanan Data"]
+        I[("Database Lokal")]
+    end
+
+    A --> B
+    D --> I
+    E <--> I
+    F <--> I
+    G --> I
+    H <--> I
+
+    I --> E
