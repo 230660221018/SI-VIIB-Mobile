@@ -33,7 +33,7 @@ Solusi berbasis aplikasi mobile diimplementasikan untuk mengakomodasi konteks be
 ## 4. Tangkapan Layar Aplikasi Berjalan
 
 1. **Halaman utama / daftar data**: Menampilkan daftar jadwal program kerja harian konten radio yang tersimpan beserta kartu indikator statusnya.
-   ![Halaman Utama](halaman-utama.png)
+   ![Screenshot Daftar](screenshot-daftar.png)
 
 2. **Halaman form pengisian data dengan validasi**: Menampilkan formulir penambahan/pengajuan jadwal konten baru yang dilengkapi validasi *input* (divisi, tanggal, judul konten).
    ![Halaman Form](screenshot-form.png)
