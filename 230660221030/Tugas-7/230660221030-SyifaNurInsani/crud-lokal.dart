@@ -5,6 +5,23 @@ void main() {
   runApp(const PustakaKuApp());
 }
 
+ // MODEL DATA BUKU
+class Buku {
+  final String judul;
+  final String penulis;
+  final String deskripsi;
+  final int stok;
+
+  const Buku({
+    required this.judul,
+    required this.penulis,
+    required this.deskripsi,
+    required this.stok,
+  });
+
+  bool get tersedia => stok > 0;
+}
+
 // MODEL DATA PEMINJAMAN
 class Peminjaman {
   final String id;
@@ -59,17 +76,102 @@ class DaftarPeminjamanScreen extends StatefulWidget {
       _DaftarPeminjamanScreenState();
 }
 
+class KatalogScreen extends StatelessWidget {
+  final List<Buku> daftarBuku;
+
+  const KatalogScreen({
+    super.key,
+    required this.daftarBuku,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Katalog Buku',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: daftarBuku.length,
+        itemBuilder: (context, index) {
+          final buku = daftarBuku[index];
+
+          return Card(
+            margin: const EdgeInsets.only(bottom: 14),
+            child: ListTile(
+              leading: const Icon(
+                Icons.menu_book,
+                size: 35,
+                color: Colors.indigo,
+              ),
+              title: Text(
+                buku.judul,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Penulis: ${buku.penulis}'),
+                  Text('Stok: ${buku.stok}'),
+                  Text(
+                    buku.tersedia
+                        ? 'Tersedia'
+                        : 'Tidak tersedia',
+                    style: TextStyle(
+                      color: buku.tersedia
+                          ? Colors.green
+                          : Colors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              isThreeLine: true,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 class _DaftarPeminjamanScreenState
     extends State<DaftarPeminjamanScreen> {
   // DATA DISIMPAN DI STATE
   final List<Peminjaman> daftarPeminjaman = [];
 
+  
   // DAFTAR BUKU
-  final List<String> daftarBuku = [
-    'Dasar-Dasar Pemrograman',
-    'Pengembangan Aplikasi Flutter',
-    'Sistem Informasi Manajemen',
-    'Konsep Basis Data',
+  final List<Buku> daftarBuku = [
+    Buku(
+      judul: 'Dasar-Dasar Pemrograman',
+      penulis: 'Tim PustakaKu',
+      deskripsi: 'Buku pengantar konsep dasar pemrograman dan algoritma.',
+      stok: 3,
+    ),
+    Buku(
+      judul: 'Pengembangan Aplikasi Flutter',
+      penulis: 'Tim PustakaKu',
+      deskripsi: 'Buku pengantar untuk membangun aplikasi menggunakan Flutter.',
+      stok: 2,
+    ),
+    Buku(
+      judul: 'Sistem Informasi Manajemen',
+      penulis: 'Tim PustakaKu',
+      deskripsi: 'Buku mengenai pemanfaatan sistem informasi dalam organisasi.',
+      stok: 0,
+    ),
+    Buku(
+      judul: 'Konsep Basis Data',
+      penulis: 'Tim PustakaKu',
+      deskripsi: 'Buku pengantar tabel, relasi, dan pengelolaan basis data.',
+      stok: 5,
+    ),
   ];
 
   // FORMAT TANGGAL
@@ -117,7 +219,7 @@ class _DaftarPeminjamanScreenState
             return AlertDialog(
               title: const Text('Ubah Status Peminjaman'),
               content: DropdownButtonFormField<String>(
-                value: statusBaru,
+                initialValue: statusBaru,
                 decoration: const InputDecoration(
                   labelText: 'Pilih Status',
                   border: OutlineInputBorder(),
@@ -256,6 +358,22 @@ class _DaftarPeminjamanScreenState
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
+          actions: [
+    IconButton(
+      tooltip: 'Katalog Buku',
+      icon: const Icon(Icons.library_books_outlined),
+      onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => KatalogScreen(
+        daftarBuku: daftarBuku,
+      ),
+    ),
+  );
+},
+    ),
+  ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -407,7 +525,7 @@ class _DaftarPeminjamanScreenState
 
 // FORM TAMBAH PEMINJAMAN
 class FormPeminjamanDialog extends StatefulWidget {
-  final List<String> daftarBuku;
+  final List<Buku> daftarBuku;
 
   const FormPeminjamanDialog({
     super.key,
@@ -495,17 +613,19 @@ class _FormPeminjamanDialogState
               ),
               const SizedBox(height: 14),
               DropdownButtonFormField<String>(
-                value: bukuTerpilih,
+                initialValue: bukuTerpilih,
                 isExpanded: true,
                 decoration: const InputDecoration(
                   labelText: 'Judul Buku',
                   border: OutlineInputBorder(),
                 ),
-                items: widget.daftarBuku.map((judul) {
-                  return DropdownMenuItem(
-                    value: judul,
+                items: widget.daftarBuku
+                    .where((buku) => buku.tersedia)
+                    .map((buku) {
+                  return DropdownMenuItem<String>(
+                    value: buku.judul,
                     child: Text(
-                      judul,
+                      buku.judul,
                       overflow: TextOverflow.ellipsis,
                     ),
                   );
