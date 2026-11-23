@@ -1,0 +1,5 @@
+# Refleksi Tugas 12 — Validasi dan Keamanan Praktis
+**Nama:** Yelly Ambarwaty  
+**NIM:** 230660221033  
+
+Risiko keamanan paling penting pada project CeriaReads adalah manipulasi data input peminjaman serta potensi kebocoran informasi pribadi anggota apabila data dikirim tanpa enkripsi HTTPS atau tidak divalidasi ulang di sisi server. Mitigasi yang dipilih adalah menerapkan sanitasi dan validasi ketat pada seluruh formulir di sisi client, membatasi format serta ukuran unggahan foto kondisi buku, dan memastikan seluruh komunikasi jaringan menggunakan protokol HTTPS tanpa menyimpan kredensial di dalam source code. Hal yang masih perlu diperbaiki ke depannya adalah mengintegrasikan sistem autentikasi berbasis token dengan `flutter_secure_storage` serta membangun validasi otoritatif pada server produksi Panti Baca Ceria.
