@@ -10,3 +10,7 @@ flutter pub get
 flutter analyze
 flutter test
 flutter run -d chrome
+```
+
+## 2. Dokumentasi Hasil
+<img width="841" height="160" alt="hasil tugas 13" src="https://github.com/user-attachments/assets/fda248ef-0ff8-47af-95c2-7fa95307bbc1" />
