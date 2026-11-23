@@ -14,3 +14,7 @@ Target verifikasi aplikasi menggunakan **Flutter Web (Google Chrome)**:
 4. Jalankan aplikasi di peramban Chrome:
    ```bash
    flutter run -d chrome
+   ```
+
+## 3. Dokumentasi Hasil
+<img width="1917" height="1007" alt="hasil tugas 12" src="https://github.com/user-attachments/assets/5c92ae42-afb1-44fa-b56a-59fca0d9c544" />
