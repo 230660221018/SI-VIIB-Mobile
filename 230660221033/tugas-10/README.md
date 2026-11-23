@@ -34,6 +34,7 @@ flowchart TD
     API2 -->|JSON List| M2[List DataPeminjaman]
     M1 & M2 -->|Gabung via userId + Aturan Status| VM[List PeminjamanRingkas]
     VM -->|Render UI| UI
+```
 
 ## 5. Dokumentasi Hasil
 <img width="1917" height="1016" alt="screenshot-hasil tugas 10" src="https://github.com/user-attachments/assets/e1f6c70c-4982-456e-afd1-df6576fe3ab5" />
