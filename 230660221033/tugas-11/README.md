@@ -9,3 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^1.1.2
+```
+
+## 2. Dokumentasi Hasil
+<img width="1917" height="1016" alt="hasil tugas 11" src="https://github.com/user-attachments/assets/9cd1f608-8720-429f-8ee3-fd36e14e6f83" />
